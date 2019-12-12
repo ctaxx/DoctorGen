@@ -23,7 +23,7 @@ public class DoctorGenStarter extends Frame {
 	public DoctorGenStarter() {
 		super("RTF generator");
 
-		setSize(500, 200);
+		setSize(470, 300);
 		setLayout(new BorderLayout());
 
 		centralPanel = new Panel();
