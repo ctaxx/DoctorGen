@@ -3,18 +3,18 @@ package doctorgen;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.CardLayout;
+import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+
+import javax.swing.JFrame;
 
 import doctorgen.flowpanels.FlowPanel;
 import doctorgen.provider.FlowProvider;
 
-public class DoctorGenStarter extends Frame {
+public class DoctorGenStarter extends JFrame {
 
 	DocumentData documentData = new DocumentData();
 	
@@ -22,9 +22,12 @@ public class DoctorGenStarter extends Frame {
 
 	public DoctorGenStarter() {
 		super("RTF generator");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		setSize(470, 300);
 		setLayout(new BorderLayout());
+		
+		Container pane = getContentPane();
 
 		centralPanel = new Panel();
 		final CardLayout cardLayout = new CardLayout();
@@ -36,7 +39,7 @@ public class DoctorGenStarter extends Frame {
 			centralPanel.add(panel, panel.panelName);
 		}
 
-		add(centralPanel, BorderLayout.CENTER);
+		pane.add(centralPanel, BorderLayout.CENTER);
 		
 		Panel southPanel = new Panel();
 		southPanel.setLayout(new FlowLayout());
@@ -63,58 +66,12 @@ public class DoctorGenStarter extends Frame {
 		
 		southPanel.add(nextButton);
 		
-		add(southPanel, BorderLayout.SOUTH);
-		
-		addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowIconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				System.exit(0);
-			}
-
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowActivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		pane.add(southPanel, BorderLayout.SOUTH);
+			
 		setVisible(true);
 	}
 
 	public static void main(String[] args) {
 		new DoctorGenStarter();
-
 	}
-
 }

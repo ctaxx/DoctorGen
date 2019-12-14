@@ -1,5 +1,6 @@
 package doctorgen.flowpanels;
 
+import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.FlowLayout;
 import java.awt.Label;
@@ -11,7 +12,6 @@ import java.awt.event.ItemListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 public class InitialPanel extends FlowPanel {
 	TextField nameTextField, projectTextField, quantityTextField;
@@ -25,14 +25,18 @@ public class InitialPanel extends FlowPanel {
 	public InitialPanel() {
 		super();
 		panelName = "initialPanel";
-
+		
+		setLayout(new BorderLayout());
+		Panel northPanel = new Panel();
+		northPanel.setLayout(new FlowLayout());
+		
 		Panel namePanel = new Panel();
 		namePanel.setLayout(new FlowLayout());
 		Label nameLabel = new Label("name");
 		namePanel.add(nameLabel);
 		nameTextField = new TextField(20);
 		namePanel.add(nameTextField);
-		add(namePanel);
+		northPanel.add(namePanel);
 
 		Panel quantityPanel = new Panel();
 		quantityPanel.setLayout(new FlowLayout());
@@ -58,14 +62,12 @@ public class InitialPanel extends FlowPanel {
 			}
 		});
 		quantityPanel.add(quantityChoice);
-		add(quantityPanel);
+		northPanel.add(quantityPanel);
+		add(northPanel, BorderLayout.NORTH);
 
-		Panel tablePanel = new Panel();
+//		Panel tablePanel = new Panel();
 
 		String[] colNames = { "number", "serial" };
-		// Object [][] data = {{"A bugs life", "G"},
-		// {"Civil Action", "PG13"}};
-		// JTable table = new JTable(data, colNames);
 		tableModel = new DefaultTableModel();
 		tableModel.setColumnIdentifiers(colNames);
 		quantity = Integer.parseInt(quantityChoice.getSelectedItem());
@@ -73,11 +75,17 @@ public class InitialPanel extends FlowPanel {
 		for (int i = 0; i < serialsArray.length; i++) {
 			tableModel.addRow(serialsArray[i]);
 		}
-		serialsTable = new JTable(tableModel);
+		serialsTable = new JTable(tableModel){
+			public boolean getScrollableTracksViewportWidth(){
+				return getPreferredSize().width < getParent().getWidth();
+			}
+		};
+		serialsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		TableColumnModel tableColumnModel = serialsTable.getColumnModel();
+//		tableColumnModel.getColumn(0).setWidth(10);
+//		tableColumnModel.getColumn(1).setWidth(50);
 
-		tablePanel.add(new JScrollPane(serialsTable));
-		add(tablePanel);
-
+		add(new JScrollPane(serialsTable), BorderLayout.CENTER);
 	}
 
 	private Object[][] createSerialsArray(int quantity) {
