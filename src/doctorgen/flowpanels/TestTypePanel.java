@@ -35,9 +35,12 @@ public class TestTypePanel extends FlowPanel {
 
 		JTable testTable = new JTable(tableModel);
 
-		JCheckBox check = new JCheckBox();
-		DefaultCellEditor editor = new DefaultCellEditor(check);
-		testTable.getColumnModel().getColumn(1).setCellEditor(editor);
+//		JCheckBox check = new JCheckBox();
+//		DefaultCellEditor editor = new DefaultCellEditor(check);
+//		testTable.getColumnModel().getColumn(1).setCellEditor(editor);
+		
+		testTable.getColumnModel().getColumn(1).setCellEditor(testTable.getDefaultEditor(Boolean.class));
+		testTable.getColumnModel().getColumn(1).setCellRenderer(testTable.getDefaultRenderer(Boolean.class));
 
 		add(new JScrollPane(testTable), BorderLayout.CENTER);
 	}
