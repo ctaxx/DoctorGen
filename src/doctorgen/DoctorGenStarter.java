@@ -65,9 +65,19 @@ public class DoctorGenStarter extends JFrame {
 		});
 		
 		southPanel.add(nextButton);
+		Button genButton = new Button("generate");
+		genButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		southPanel.add(genButton);
 		
 		pane.add(southPanel, BorderLayout.SOUTH);
-			
+		
 		setVisible(true);
 	}
 
