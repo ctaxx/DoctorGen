@@ -24,7 +24,7 @@ public class DoctorGenStarter extends JFrame {
 		super("RTF generator");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		setSize(470, 300);
+		setSize(600, 300);
 		setLayout(new BorderLayout());
 		
 		Container pane = getContentPane();

@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.google.gson.JsonObject;
+
 public class InitialPanel extends FlowPanel {
 	TextField nameTextField, projectTextField, quantityTextField;
 	DefaultTableModel tableModel;
@@ -37,6 +39,14 @@ public class InitialPanel extends FlowPanel {
 		nameTextField = new TextField(20);
 		namePanel.add(nameTextField);
 		northPanel.add(namePanel);
+		
+		Panel projectPanel = new Panel();
+		projectPanel.setLayout(new FlowLayout());
+		Label projectLabel = new Label("project");
+		projectPanel.add(projectLabel);
+		projectTextField = new TextField(20);
+		projectPanel.add(projectTextField);
+		northPanel.add(projectPanel);
 
 		Panel quantityPanel = new Panel();
 		quantityPanel.setLayout(new FlowLayout());
@@ -96,5 +106,11 @@ public class InitialPanel extends FlowPanel {
 			objArray[i][1] = "";
 		}
 		return objArray;
+	}
+	
+	public void getData(JsonObject json){
+		json.addProperty("name", nameTextField.getText());
+		json.addProperty("project", projectTextField.getText());
+		json.addProperty("quantity", quantity);
 	}
 }
