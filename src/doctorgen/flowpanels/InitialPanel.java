@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class InitialPanel extends FlowPanel {
@@ -81,10 +82,9 @@ public class InitialPanel extends FlowPanel {
 		tableModel = new DefaultTableModel();
 		tableModel.setColumnIdentifiers(colNames);
 		quantity = Integer.parseInt(quantityChoice.getSelectedItem());
-		serialsArray = createSerialsArray(quantity);
-		for (int i = 0; i < serialsArray.length; i++) {
-			tableModel.addRow(serialsArray[i]);
-		}
+		Object [] tmpObj = {"1",""};
+		tableModel.addRow(tmpObj);
+
 		serialsTable = new JTable(tableModel){
 			public boolean getScrollableTracksViewportWidth(){
 				return getPreferredSize().width < getParent().getWidth();
@@ -98,19 +98,19 @@ public class InitialPanel extends FlowPanel {
 		add(new JScrollPane(serialsTable), BorderLayout.CENTER);
 	}
 
-	private Object[][] createSerialsArray(int quantity) {
-		Object[][] objArray = new Object[quantity][2];
-
-		for (int i = 0; i < quantity; i++) {
-			objArray[i][0] = Integer.toString(i + 1);
-			objArray[i][1] = "";
-		}
-		return objArray;
-	}
 	
 	public void getData(JsonObject json){
 		json.addProperty("name", nameTextField.getText());
 		json.addProperty("project", projectTextField.getText());
 		json.addProperty("quantity", quantity);
+		
+		JsonArray serialsJson = new JsonArray();
+		for (int i=0; i< tableModel.getRowCount(); i++){
+			JsonObject tmpJson = new JsonObject();
+			tmpJson.addProperty("number", tableModel.getValueAt(i, 0).toString());
+			tmpJson.addProperty("serial", tableModel.getValueAt(i, 1).toString());
+			serialsJson.add(tmpJson);
+		}
+		json.add("serials", serialsJson);
 	}
 }

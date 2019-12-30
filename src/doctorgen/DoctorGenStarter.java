@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import com.google.gson.JsonObject;
+
 import doctorgen.flowpanels.FlowPanel;
 import doctorgen.provider.FlowProvider;
 
@@ -19,6 +21,7 @@ public class DoctorGenStarter extends JFrame {
 	DocumentData documentData = new DocumentData();
 	
 	Panel centralPanel;
+	FlowProvider flowProvider;
 
 	public DoctorGenStarter() {
 		super("RTF generator");
@@ -33,7 +36,7 @@ public class DoctorGenStarter extends JFrame {
 		final CardLayout cardLayout = new CardLayout();
 		centralPanel.setLayout(cardLayout);
 
-		FlowProvider flowProvider = new FlowProvider();
+		flowProvider = new FlowProvider();
 
 		for (FlowPanel panel : flowProvider.getStuff()) {
 			centralPanel.add(panel, panel.panelName);
@@ -70,7 +73,8 @@ public class DoctorGenStarter extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				JsonObject jsonObj = new JsonObject();
+				flowProvider.getStuff().get(0).getData(jsonObj);
 				
 			}
 		});
