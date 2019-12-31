@@ -19,7 +19,7 @@ import doctorgen.provider.FlowProvider;
 public class DoctorGenStarter extends JFrame {
 
 	DocumentData documentData = new DocumentData();
-	
+
 	Panel centralPanel;
 	FlowProvider flowProvider;
 
@@ -29,7 +29,7 @@ public class DoctorGenStarter extends JFrame {
 
 		setSize(600, 300);
 		setLayout(new BorderLayout());
-		
+
 		Container pane = getContentPane();
 
 		centralPanel = new Panel();
@@ -43,30 +43,30 @@ public class DoctorGenStarter extends JFrame {
 		}
 
 		pane.add(centralPanel, BorderLayout.CENTER);
-		
+
 		Panel southPanel = new Panel();
 		southPanel.setLayout(new FlowLayout());
-		
+
 		Button prevButton = new Button("prev");
 		prevButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.previous(centralPanel);
 			}
 		});
-		
+
 		southPanel.add(prevButton);
-		
+
 		Button nextButton = new Button("next");
 		nextButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cardLayout.next(centralPanel);
 			}
 		});
-		
+
 		southPanel.add(nextButton);
 		Button genButton = new Button("generate");
 		genButton.addActionListener(new ActionListener() {
@@ -74,14 +74,16 @@ public class DoctorGenStarter extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JsonObject jsonObj = new JsonObject();
-				flowProvider.getStuff().get(0).getData(jsonObj);
-				
+				for (FlowPanel flowPanel : flowProvider.getStuff()) {
+					flowPanel.getData(jsonObj);
+				}
+				System.out.println(jsonObj.toString());
 			}
 		});
 		southPanel.add(genButton);
-		
+
 		pane.add(southPanel, BorderLayout.SOUTH);
-		
+
 		setVisible(true);
 	}
 
